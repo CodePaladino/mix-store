@@ -1,0 +1,156 @@
+/*
+Theme Name: Mix Store
+Theme URI:
+Author:
+Author URI:
+Description: The Mix Store Multi Purpose WooCommerce theme for WordPress by <a href="http://bit.ly/opalwp">OpalTeam</a>is a fully responsive theme that looks great on any device. That's the best for any kind of online shoping sites. <a href="http://bit.ly/opalwp">Follow us on Themeforest to receive newest updates</a>
+Version: 1.4 Release 26-Feb-2015
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: light, gray, white, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
+Text Domain: Mixstore
+
+This theme, like WordPress, is licensed under the GPL.
+Use it to make something cool, have fun, and share what you've learned with others.
+*/
+
+
+/*Schriften lokal von Goolge bereitstellen und einbinden */
+
+/* shadows-into-light-two-regular - latin-ext_latin */
+@font-face {
+  font-family: 'Shadows Into Light Two';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Shadows Into Light Two'), local('ShadowsIntoLightTwo-Regular'),
+       url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/shadows-into-light-two-v5-latin-ext_latin-regular.svg#ShadowsIntoLightTwo') format('svg'); /* Legacy iOS */
+}
+
+/* raleway-regular - latin-ext_latin */
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/raleway-v12-latin-ext_latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Raleway'), local('Raleway-Regular'),
+       url('../fonts/raleway-v12-latin-ext_latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/raleway-v12-latin-ext_latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/raleway-v12-latin-ext_latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/raleway-v12-latin-ext_latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/raleway-v12-latin-ext_latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
+}
+
+
+.wp-caption{}
+
+.wp-caption-text{}
+
+.sticky{}
+
+.gallery-caption{}
+
+.bypostauthor{}
+
+.alignright{}
+
+.alignleft{}
+
+.aligncenter{}
+
+.demo_store { display: none; }
+
+/* Ausblenden des Kasse Buttons */
+a.btn.btn-outline.btn-sm.checkout.wc-forward { display: none; }
+
+
+#wpo-footer .wpb-inner {
+	margin-top: 25px !important;
+	padding-left: 18px !important;
+	padding-right: 18px !important;
+}
+#wpo-footer .wpb-inner .row { background-color: #fbfbec !important; }
+
+.wpo-search { display: none !important; }
+.yith-wcwl-add-to-wishlist { display: none !important; }
+a.compare  { display: none !important; }
+
+#menu-menu-footer-links,
+#menu-menu-footer-rechts {
+	padding-left: 10px !important;
+}
+
+#menu-menu-footer-mitte-links {
+	padding-left: 70px !important;
+}
+
+#menu-menu-footer-mitte-rechts {
+	padding-left: 60px !important;
+}
+.ueberuns {
+	height:300px;
+	display:table-cell !important;
+	vertical-align:middle !important;
+}
+
+.tax-product_cat form.woocommerce-ordering {
+	display: none;
+}
+
+#comments .header-title { display: none; }
+
+@media (max-width: 768px) {
+
+	#menu-menu-footer-links,
+	#menu-menu-footer-rechts {
+		padding-left: 10px !important;
+	}
+
+	#menu-menu-footer-mitte-links {
+		padding-left: 10px !important;
+		padding-top: 15px;
+	}
+
+	#menu-menu-footer-mitte-rechts {
+		padding-left: 10px !important;
+		padding-top: 15px;
+	}
+
+	#menu-menu-footer-rechts {
+		padding-top: 15px;
+	}
+}
+
+/*Hier wird die Hintergrudfarbe des Balkens geändert*/
+.cc_container {
+background: #46494a none repeat scroll 0 0!important;
+}
+
+/* Hier wird die Farbe für die Nachricht eingestellt*/
+.cc_message {
+	color: #fbfbec!important;
+}
+
+/*Hier wird die Farbe des Buttons angepasst*/
+.cc_container .cc_btn, .cc_container .cc_btn:visited {
+color: #46494a!important;
+background-color: #fbfbec!important;}
+
+/*Hier wird die Farbe des "Mehr erfahren"-Links angepasst*/
+a.cc_more_info {
+color: #73cce9!important;
+}
+
+/* Hier Anpassung der Hintergrundfarbe der Blogbeitraege */
+.single-blog {
+background: #fbfbec !important;
+}
+
+/* Hintergrundfarbe in den Posts - Single Seite */
+.vc_custom_1419240516480 {
+	background-color: #fbfbec !important;
+}

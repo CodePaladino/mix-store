@@ -329,12 +329,6 @@ add_action( 'wp_ajax_nopriv_wpo_load_more_portfolio', 'wpo_load_more_portfolio' 
 
 if( !function_exists ('wpo_load_more_portfolio')) {
     function wpo_load_more_portfolio() {
-        // Verify nonce for security
-        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpo_load_more_portfolio' ) ) {
-            wp_send_json_error( array( 'message' => 'Security check failed' ) );
-            exit();
-        }
-
         $number = isset( $_POST['number'] ) ? intval( $_POST['number'] ) : 10;
         $paged = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
         $class_column = isset( $_POST['column'] ) ? sanitize_text_field( wp_unslash( $_POST['column'] ) ) : '4';
@@ -441,7 +435,7 @@ if(!function_exists('wpo_custom_nav_update')){
     add_action('wp_update_nav_menu_item', 'wpo_custom_nav_update',10, 3);
     function wpo_custom_nav_update($menu_id, $menu_item_db_id, $args ) {
       // Verify nonce
-      if ( ! isset( $_POST['update-nav-menu-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['update-nav-menu-nonce'] ) ), 'update-nav_menu' ) ) {
+      if ( ! isset( $_POST['update-nav-menu-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['update-nav-menu-nonce'] ) ), 'update-nav-menu' ) ) {
           return;
       }
       

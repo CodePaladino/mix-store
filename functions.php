@@ -183,9 +183,9 @@ if(!function_exists('kc_excerpt')) {
 add_filter( 'woocommerce_get_catalog_ordering_args', 'custom_woocommerce_get_catalog_ordering_args' );
 
 function custom_woocommerce_get_catalog_ordering_args( $args ) {
-    $orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+    $orderby_value = isset( $_GET['orderby'] ) ? wc_clean( wp_unslash( $_GET['orderby'] ) ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
 
-    if ( 'random_list' == $orderby_value ) {
+    if ( 'random_list' === $orderby_value ) {
         $args['orderby'] = 'rand';
         $args['order'] = '';
         $args['meta_key'] = '';
@@ -320,12 +320,21 @@ add_action( 'woocommerce_after_single_product', 'bbloomer_custom_action', 5 );
 function bbloomer_custom_action() {
 	
 	// Get parent product categories on single product pages
-	$terms = wp_get_post_terms( get_the_id(), 'product_cat', array( 'include_children' => false ) );
+	$terms = wp_get_post_terms( get_the_ID(), 'product_cat', array( 'include_children' => false ) );
+	if ( is_wp_error( $terms ) || empty( $terms ) ) {
+		return;
+	}
 	// Get the first main product category (not a child one)
-	$term = reset($terms);
-	$term_link =  get_term_link( $term->term_id, 'product_cat' ); // The link
+	$term = reset( $terms );
+	if ( ! $term ) {
+		return;
+	}
+	$term_link = get_term_link( $term->term_id, 'product_cat' );
+	if ( is_wp_error( $term_link ) ) {
+		return;
+	}
 	// echo "<div class='cat-prod-link-back x-container max width' style='text-align: center; width: 50%; margin: auto; padding-bottom: 20px;'><a class='wpllm-button_02 button single_add_to_cart_button alt btn-block' href='#' onClick='history.go(-1); return false;'>zur&uuml;ck zur &Uuml;bersicht</a></div>";
-	echo "<div class='cat-prod-link-back x-container max width' style='text-align: center; width: 50%; margin: auto; padding-bottom: 20px;'><a class='wpllm-button_02 button single_add_to_cart_button alt btn-block' href='$term_link'>zur &Uuml;bersicht</a></div>";
+	echo '<div class="cat-prod-link-back x-container max width" style="text-align: center; width: 50%; margin: auto; padding-bottom: 20px;"><a class="wpllm-button_02 button single_add_to_cart_button alt btn-block" href="' . esc_url( $term_link ) . '">zur &Uuml;bersicht</a></div>';
 }
 
 
@@ -368,16 +377,19 @@ add_action( 'manage_shop_order_posts_custom_column' , 'admin_orders_list_column_
 function admin_orders_list_column_content( $column, $post_id ){
     global $the_order;
 
-    if( 'custom_column' === $column ){
+    if( 'custom_column' === $column && $the_order ){
         $count = 0;
 
         // Loop through order items
         foreach( $the_order->get_items() as $item ) {
             $product = $item->get_product(); // The WC_Product Object
+            if ( ! $product ) {
+                continue;
+            }
             $style   = $count > 0 ? ' style="padding-left:6px;"' : '';
 
             // Display product thumbnail
-            printf( '<span%s>%s</span>', $style, $product->get_image( array( 50, 50 ) ) );
+            printf( '<span%s>%s</span>', esc_attr( $style ), $product->get_image( array( 50, 50 ) ) );
 
             $count++;
         }
@@ -394,10 +406,13 @@ add_filter( 'manage_shop_order_posts_columns', 'kb_set_order_note_column', 99 );
 function kb_show_order_note_columns( $column_name, $post_id ) {
  switch ( $column_name ) {
   case 'order_notes':
-  $order = new WC_Order( $post_id );
+  $order = wc_get_order( $post_id );
+  if ( ! $order ) {
+      break;
+  }
   $note = $order->get_customer_note();
   /*print $note ? __('Yes','TEXTDOMAIN') : __('No','TEXTDOMAIN');*/
-  print $note;
+  echo esc_html( $note );
   break;
  }
 }
@@ -434,10 +449,12 @@ add_filter( 'woocommerce_output_related_products_args', function( $args )
 {
     $args = wp_parse_args( array(
         'posts_per_page' => 4,
-        'meta_query' => array (
-           'key' => '_stock_status',
-           'value' => 'instock'
-    )
+        'meta_query' => array(
+            array(
+                'key' => '_stock_status',
+                'value' => 'instock'
+            )
+        )
     ), $args );
     return $args;
 });

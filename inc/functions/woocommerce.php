@@ -274,9 +274,12 @@ function wpo_woocommerce_query($type,$post_per_page=-1,$cat=''){
 if ( !function_exists('woocommerce_sale_flashmessage') ) {
     function woocommerce_sale_flashmessage($flash){
         global $product;
+        if ( ! $product ) {
+            return $flash;
+        }
         $availability = $product->get_availability();
 
-        if ($availability['availability'] == 'Out of stock') :
+        if ( isset( $availability['availability'] ) && 'Out of stock' === $availability['availability'] ) :
             $flash = '<span class="out-of-stock-badge onsale">'.__( 'Out of stock', 'woocommerce' ).'</span>';
         endif;
         return $flash;

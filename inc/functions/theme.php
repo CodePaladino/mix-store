@@ -329,9 +329,15 @@ add_action( 'wp_ajax_nopriv_wpo_load_more_portfolio', 'wpo_load_more_portfolio' 
 
 if( !function_exists ('wpo_load_more_portfolio')) {
     function wpo_load_more_portfolio() {
-        $number = $_POST['number'];
-        $paged = $_POST['paged'];
-        $class_column = $_POST['column'];
+        // Verify nonce for security
+        if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'wpo_load_more_portfolio' ) ) {
+            wp_send_json_error( array( 'message' => 'Security check failed' ) );
+            exit();
+        }
+
+        $number = isset( $_POST['number'] ) ? intval( $_POST['number'] ) : 10;
+        $paged = isset( $_POST['paged'] ) ? intval( $_POST['paged'] ) : 1;
+        $class_column = isset( $_POST['column'] ) ? sanitize_text_field( wp_unslash( $_POST['column'] ) ) : '4';
         $args = array(
             'post_type' => 'portfolio',
             'posts_per_page'=>$number,
@@ -368,7 +374,7 @@ if( !function_exists ('wpo_load_more_portfolio')) {
                               <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                           </h4>
                           <?php if( $image_attributes ) : ?>
-                              <a href="<?php echo esc_url( $image_attributes[0] ); ?>" rel="prettyPhoto[<?php echo $item_classes; ?>]" title="<?php the_title_attribute(); ?>" class="btn btn-outline-inverse">
+                              <a href="<?php echo esc_url( $image_attributes[0] ); ?>" rel="prettyPhoto[<?php echo esc_attr( $item_classes ); ?>]" title="<?php the_title_attribute(); ?>" class="btn btn-outline-inverse">
                                 <i class="fa fa-plus"></i>
                               </a>
                         <?php endif; ?>
@@ -380,6 +386,7 @@ if( !function_exists ('wpo_load_more_portfolio')) {
             <?php
                 $posts[] = ob_get_clean();
             endwhile;
+            wp_reset_postdata();
         }
         if($paged >= $loop->max_num_pages)
             $result['check'] = false;
@@ -387,7 +394,7 @@ if( !function_exists ('wpo_load_more_portfolio')) {
             $result['check'] = true;
 
         $result['posts'] = $posts;
-        print_r(json_encode($result));
+        wp_send_json( $result );
         exit();
     }
 }
@@ -433,10 +440,15 @@ if(!function_exists('wpo_add_extra_fields_menu_config')){
 if(!function_exists('wpo_custom_nav_update')){
     add_action('wp_update_nav_menu_item', 'wpo_custom_nav_update',10, 3);
     function wpo_custom_nav_update($menu_id, $menu_item_db_id, $args ) {
-      if(!isset($_POST['menu-item-text_customize'][$menu_item_db_id])){
+      // Verify nonce
+      if ( ! isset( $_POST['update-nav-menu-nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['update-nav-menu-nonce'] ) ), 'update-nav_menu' ) ) {
+          return;
+      }
+      
+      if( ! isset( $_POST['menu-item-text_customize'][$menu_item_db_id] ) ){
           $_POST['menu-item-text_customize'][$menu_item_db_id] = "";
       }
-      $custom_value = $_POST['menu-item-text_customize'][$menu_item_db_id];
+      $custom_value = sanitize_text_field( wp_unslash( $_POST['menu-item-text_customize'][$menu_item_db_id] ) );
       update_post_meta( $menu_item_db_id, 'text_customize', $custom_value );
     }
 }
@@ -548,10 +560,15 @@ if(!function_exists('wpo_price')){
 }
  
 if ( is_admin() && isset($_GET['activated'] ) && $pagenow == 'themes.php' ) {
-  $menus = get_terms( 'nav_menu', array( 'hide_empty' => true ) ); 
+  $menus = get_terms( array( 
+    'taxonomy' => 'nav_menu',
+    'hide_empty' => true
+  ) ); 
   $locations = get_theme_mod('nav_menu_locations');
-  if(!$locations['mainmenu'] && isset($menus[0]->term_id)){
-    $locations['mainmenu'] = $menus[0]->term_id;
+  if( ! $locations || ! isset( $locations['mainmenu'] ) || ! $locations['mainmenu'] ) {
+    if( ! empty( $menus ) && ! is_wp_error( $menus ) && isset( $menus[0]->term_id ) ) {
+      $locations['mainmenu'] = $menus[0]->term_id;
+      set_theme_mod( 'nav_menu_locations', $locations );
+    }
   }
-  set_theme_mod( 'nav_menu_locations', $locations );
 }

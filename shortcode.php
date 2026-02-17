@@ -15,7 +15,7 @@
 add_shortcode('code','wpo_shortcode_code');
 function wpo_shortcode_code($atts,$content=null){
     $html = '<pre class="shortcode_sourcecode"><code>
-        '.$content.'
+        ' . esc_html( $content ) . '
     </code></pre>';
     return $html;
 }
@@ -38,10 +38,10 @@ function wpo_shortcode_one_full($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-12'
-    ), $atts);
+    ), $atts, 'one_full');
     $html ='';
     $html .='
-        <div class="col-md-12 '.$atts['class'].'">';
+        <div class="col-md-12 ' . esc_attr( $atts['class'] ) . '">';
             $html.= do_shortcode($content).'
         </div>
     ';
@@ -53,10 +53,10 @@ function wpo_shortcode_one_half($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6',
-    ), $atts);
+    ), $atts, 'one_half');
     $html ='';
     $html .='
-        <div class="col-md-6 '.$atts['class'].'">
+        <div class="col-md-6 ' . esc_attr( $atts['class'] ) . '">
             '.do_shortcode($content).'
         </div>
     ';
@@ -69,10 +69,10 @@ function wpo_shortcode_one_third($atts, $content=null){
         array(
         'class' => 'col-sm-6',
         'title' => '',
-    ), $atts);
+    ), $atts, 'one_third');
     $html ='';
     $html .='
-        <div class="col-md-4 '.$atts['class'].'">';
+        <div class="col-md-4 ' . esc_attr( $atts['class'] ) . '">';
             $html .= do_shortcode($content).'
         </div>
     ';
@@ -84,10 +84,10 @@ function wpo_shortcode_two_third($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6'
-    ), $atts);
+    ), $atts, 'two_third');
     $html ='';
     $html .='
-        <div class="col-md-8 '.$atts['class'].'">';
+        <div class="col-md-8 ' . esc_attr( $atts['class'] ) . '">';
             $html .= do_shortcode($content).'
         </div>
     ';
@@ -99,10 +99,10 @@ function wpo_shortcode_one_fourth($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6'
-    ), $atts);
+    ), $atts, 'one_fourth');
     $html ='';
     $html .='
-        <div class="col-md-3 '.$atts['class'].'">';
+        <div class="col-md-3 ' . esc_attr( $atts['class'] ) . '">';
             $html.= do_shortcode($content).'
         </div>
     ';
@@ -114,10 +114,10 @@ function wpo_shortcode_three_fourth($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-9'
-    ), $atts);
+    ), $atts, 'three_fourth');
     $html ='';
     $html .='
-        <div class="col-md-9 '.$atts['class'].'">';
+        <div class="col-md-9 ' . esc_attr( $atts['class'] ) . '">';
             $html.= do_shortcode($content).'
         </div>
     ';
@@ -129,10 +129,10 @@ function wpo_shortcode_one_sixth($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6'
-    ), $atts);
+    ), $atts, 'one_sixth');
     $html ='';
     $html .='
-        <div class="col-md-2 '.$atts['class'].'">';
+        <div class="col-md-2 ' . esc_attr( $atts['class'] ) . '">';
             $html .= do_shortcode($content).'
         </div>
     ';
@@ -144,10 +144,10 @@ function wpo_shortcode_seven_twelve($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6'
-    ), $atts);
+    ), $atts, 'seven_twelve');
     $html ='';
     $html .='
-        <div class="col-md-7 '.$atts['class'].'">';
+        <div class="col-md-7 ' . esc_attr( $atts['class'] ) . '">';
             $html.= do_shortcode($content).'
         </div>
     ';
@@ -159,10 +159,10 @@ function wpo_shortcode_five_twelve($atts, $content=null){
     $atts = shortcode_atts(
         array(
         'class' => 'col-sm-6'
-    ), $atts);
+    ), $atts, 'five_twelve');
     $html ='';
     $html .='
-        <div class="col-md-5 '.$atts['class'].'">';
+        <div class="col-md-5 ' . esc_attr( $atts['class'] ) . '">';
             $html.= do_shortcode($content).'
         </div>
     ';
@@ -177,10 +177,10 @@ function wpo_shortcode_panel_group($atts, $content=null){
         'sub_title' => '',
         'class' => '',
         'animate' => '',
-    ), $atts);
+    ), $atts, 'panel_group');
     $html ='';
     $html .='
-        <div class="panel-group" id="'.$atts['id'].'">
+        <div class="panel-group" id="' . esc_attr( $atts['id'] ) . '">
             '.do_shortcode($content).'
         </div>
     ';
@@ -197,7 +197,7 @@ function wpo_shortcode_panel($atts, $content=null){
         'title' => '',
         'type' => 'default',
         'animate' => '',
-    ), $atts);
+    ), $atts, 'panel');
     if($atts['in']=="true"){
         $in = 'in';
     }else{
@@ -205,13 +205,13 @@ function wpo_shortcode_panel($atts, $content=null){
     }
     $html ='';
     $html .='
-        <div class="panel panel-'.$atts['type'].'">
+        <div class="panel panel-' . esc_attr( $atts['type'] ) . '">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#'.$atts['id_parent'].'" href="#collapsepanel'.$counter.'">'.$atts['title'].'</a>
+                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#' . esc_attr( $atts['id_parent'] ) . '" href="#collapsepanel' . absint( $counter ) . '">' . esc_html( $atts['title'] ) . '</a>
                 </h4>
             </div>
-            <div id="collapsepanel'.$counter.'" class="panel-collapse collapse '.$in.'">
+            <div id="collapsepanel' . absint( $counter ) . '" class="panel-collapse collapse ' . esc_attr( $in ) . '">
                 <div class="panel-body">
                 <div>'.do_shortcode($content).'</div>
                 </div>
@@ -231,10 +231,10 @@ function wpo_shortcode_accordion($atts, $content=null){
         'sub_title' => '',
         'class' => '',
         'animate' => '',
-    ), $atts);
+    ), $atts, 'accordion');
     $html ='';
     $html .='
-        <div class="accordion" id="'.$atts['id'].'">
+        <div class="accordion" id="' . esc_attr( $atts['id'] ) . '">
             '.do_shortcode($content).'
         </div>
     ';
@@ -252,7 +252,7 @@ function wpo_shortcode_accordion_item($atts, $content=null){
         'in' => '',
         'title' => '',
         'animate' => '',
-    ), $atts);
+    ), $atts, 'accordion_item');
     if($atts['in']=="true"){
         $in = 'in';
     }else{
@@ -262,9 +262,9 @@ function wpo_shortcode_accordion_item($atts, $content=null){
     $html .='
         <div class="accordion-group">
             <div class="accordion-heading">
-                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#'.$atts['id_parent'].'" href="#collapse'.$counter.'"><em class="icon-plus icon-fixed-width"></em>'.$atts['title'].'</a>
+                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#' . esc_attr( $atts['id_parent'] ) . '" href="#collapse' . absint( $counter ) . '"><em class="icon-plus icon-fixed-width"></em>' . esc_html( $atts['title'] ) . '</a>
             </div>
-            <div id="collapse'.$counter.'" class="accordion-body collapse '.$in.'">
+            <div id="collapse' . absint( $counter ) . '" class="accordion-body collapse ' . esc_attr( $in ) . '">
                 <div class="accordion-inner">
                 <div>'.do_shortcode($content).'</div>
                 </div>
@@ -285,7 +285,7 @@ add_shortcode('button','wpo_shortcode_button');
         'disable'=>'',
         'block'=>'',
         'link'=>'#',
-    ), $atts);
+    ), $atts, 'button');
     if($atts['disable']=='true'){
         $disable = 'disable';
     }else{
@@ -298,7 +298,7 @@ add_shortcode('button','wpo_shortcode_button');
     }
     $html ='';
     $html .='
-        <a class="btn '.$disable.' btn-'.$atts['type'].' btn-'.$atts['block'].' btn-'.$atts['size'].'" href="'.$atts['link'].'">'.do_shortcode($content).'</a>
+        <a class="btn ' . esc_attr( $disable ) . ' btn-' . esc_attr( $atts['type'] ) . ' btn-' . esc_attr( $block ) . ' btn-' . esc_attr( $atts['size'] ) . '" href="' . esc_url( $atts['link'] ) . '">'.do_shortcode($content).'</a>
     ';
     return $html;
 }
@@ -306,12 +306,12 @@ add_shortcode('button','wpo_shortcode_button');
 add_shortcode('tabs', 'wpo_shortcode_tabs_group');
 function wpo_shortcode_tabs_group($atts, $content = null ) {
     global $tabs_divs;
-    extract(shortcode_atts(array(
+    $atts = shortcode_atts(array(
         'style' => '',
-    ), $atts));
+    ), $atts, 'tabs');
     $tabs_divs = '';
 
-    $output = '<div class="tabbable tabs-'.$style.'"><ul class="nav nav-tabs"';
+    $output = '<div class="tabbable tabs-' . esc_attr( $atts['style'] ) . '"><ul class="nav nav-tabs"';
     $output.='>'.do_shortcode($content).'</ul>';
     $output.= '<div class="tab-content">'.$tabs_divs.'</div></div>';
 
@@ -322,34 +322,34 @@ add_shortcode('tab', 'wpo_shortcode_tab');
 function wpo_shortcode_tab($atts, $content = null) {
     global $tabs_divs;
 
-    extract(shortcode_atts(array(
+    $atts = shortcode_atts(array(
         'id' => '',
         'title' => '',
         'active' => '',
-    ), $atts));
+    ), $atts, 'tab');
 
-    if(empty($id))
-        $id = 'side-tab'.rand(100,999);
+    if(empty($atts['id']))
+        $atts['id'] = 'side-tab'.rand(100,999);
 
     $output = '
-        <li class="'.$active.'">
-            <a href="#'.$id.'" data-toggle="tab">'.$title.'</a>
+        <li class="' . esc_attr( $atts['active'] ) . '">
+            <a href="#' . esc_attr( $atts['id'] ) . '" data-toggle="tab">' . esc_html( $atts['title'] ) . '</a>
         </li>
     ';
 
-    $tabs_divs.= '<div class="tab-pane '.$active.'" id="'.$id.'">'.do_shortcode($content).'</div>';
+    $tabs_divs.= '<div class="tab-pane ' . esc_attr( $atts['active'] ) . '" id="' . esc_attr( $atts['id'] ) . '">'.do_shortcode($content).'</div>';
 
     return $output;
 }
 
 add_shortcode('alert_box', 'wpo_shortcode_alert_box');
 function wpo_shortcode_alert_box($atts, $content = null){
-    extract(shortcode_atts(array(
+    $atts = shortcode_atts(array(
         'type' => '',
-    ), $atts));
+    ), $atts, 'alert_box');
     $html ='';
     $html .='
-         <div class="alert alert-'.$type.'">
+         <div class="alert alert-' . esc_attr( $atts['type'] ) . '">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           '.do_shortcode($content).'
         </div>
@@ -362,10 +362,10 @@ add_shortcode('icon','wpo_shortcode_icon');
      $atts = shortcode_atts(
         array(
         'icon_name'=>''
-    ), $atts);
+    ), $atts, 'icon');
     $html = '';
     $html .='
-        <i class="fa '.$atts['icon_name'].'"></i>
+        <i class="fa ' . esc_attr( $atts['icon_name'] ) . '"></i>
     ';
     return $html;
  }

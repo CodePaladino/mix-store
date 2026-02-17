@@ -32,7 +32,7 @@ global $product, $post;
 								if ( is_array( $options ) ) {
 
 									if ( isset( $_REQUEST[ 'attribute_' . sanitize_title( $name ) ] ) ) {
-										$selected_value = $_REQUEST[ 'attribute_' . sanitize_title( $name ) ];
+										$selected_value = sanitize_text_field( wp_unslash( $_REQUEST[ 'attribute_' . sanitize_title( $name ) ] ) );
 									} elseif ( isset( $selected_attributes[ sanitize_title( $name ) ] ) ) {
 										$selected_value = $selected_attributes[ sanitize_title( $name ) ];
 									} else {
@@ -86,7 +86,7 @@ global $product, $post;
 				</button>
 			</div>
 
-			<input type="hidden" name="add-to-cart" value="<?php echo $product->id; ?>" />
+			<input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
 			<input type="hidden" name="product_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 			<input type="hidden" name="variation_id" class="variation_id" value="" />
 

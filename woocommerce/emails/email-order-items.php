@@ -60,9 +60,9 @@ foreach ( $items as $item ) :
 		<td style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo $order->get_formatted_line_subtotal( $item ); ?></td>
 	</tr>
 
-	<?php if ( $show_purchase_note && is_object( $_product ) && $purchase_note = get_post_meta( $_product->id, '_purchase_note', true ) ) : ?>
+	<?php if ( $show_purchase_note && is_object( $_product ) && $purchase_note = get_post_meta( $_product->get_id(), '_purchase_note', true ) ) : ?>
 		<tr>
-			<td colspan="3" style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo wpautop( do_shortcode( $purchase_note ) ); ?></td>
+			<td colspan="3" style="text-align:left; vertical-align:middle; border: 1px solid #eee;"><?php echo wpautop( do_shortcode( wp_kses_post( $purchase_note ) ) ); ?></td>
 		</tr>
 	<?php endif; ?>
 

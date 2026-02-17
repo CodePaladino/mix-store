@@ -38,7 +38,7 @@ if ( ! $product->is_purchasable() ) return;
 	 			) );
 	 	?>
 
-	 	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->id ); ?>" />
+	 	<input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
 
 		 	<div class="add-cart">
 		 		<button type="submit" class="button single_add_to_cart_button alt btn-block">

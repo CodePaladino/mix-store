@@ -44,7 +44,11 @@ switch ($columns_count) {
   break;
 }
 
-$portfolio_skills = get_terms('Categories',array('orderby'=>'id'));
+$portfolio_skills = get_terms( array(
+    'taxonomy' => 'Categories',
+    'orderby' => 'id',
+    'hide_empty' => false
+) );
 $args = array(
   'post_type' => 'portfolio',
   'posts_per_page'=>$number

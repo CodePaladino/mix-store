@@ -75,16 +75,16 @@ class WPO_Widget_Product_Categories extends WC_Widget_Product_Categories {
 		if ( $s && $this->current_cat ) {
 
 			// Top level is needed
-			$top_level = get_terms( 'product_cat', array( 'fields' => 'ids', 'parent' => 0, 'hierarchical' => false, 'hide_empty' => false ) );
+			$top_level = get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'ids', 'parent' => 0, 'hierarchical' => false, 'hide_empty' => false ) );
 
 			// Direct children are wanted
-			$direct_children = get_terms( 'product_cat', array( 'fields' => 'ids', 'parent' => $this->current_cat->term_id, 'hierarchical' => true, 'hide_empty' => false ) );
+			$direct_children = get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'ids', 'parent' => $this->current_cat->term_id, 'hierarchical' => true, 'hide_empty' => false ) );
 
 			// Gather siblings of ancestors
 			$siblings  = array();
 			if ( $this->cat_ancestors ) {
 				foreach ( $this->cat_ancestors as $ancestor ) {
-					$siblings = array_merge( $siblings, get_terms( 'product_cat', array( 'fields' => 'ids', 'parent' => $ancestor, 'hierarchical' => false, 'hide_empty' => false ) ) );
+					$siblings = array_merge( $siblings, get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'ids', 'parent' => $ancestor, 'hierarchical' => false, 'hide_empty' => false ) ) );
 				}
 			}
 

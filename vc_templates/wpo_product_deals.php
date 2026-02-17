@@ -78,12 +78,15 @@
                 <?php } ?>
                 <div class="carousel-inner">
                     <?php foreach($deals as $key=>$id ){
-                        $product = get_product( $id );
-                        $time_sale = get_post_meta( $product->id, '_sale_price_dates_to', true );
+                        $product = wc_get_product( $id );
+                        if ( ! $product ) {
+                            continue;
+                        }
+                        $time_sale = get_post_meta( $product->get_id(), '_sale_price_dates_to', true );
                     ?>
                     <?php if( $_count%$columns_count == 1 || $columns_count == 1 ) echo '<div class="item'.(($_count==1)?" active":"").'"><div class="row">'; ?>
                    
-                            <div class="item-product <?php echo $class_column; if($_count%$columns_count==0) echo ' last'; ?>">
+                            <div class="item-product <?php echo esc_attr( $class_column ); if($_count%$columns_count==0) echo ' last'; ?>">
                                 <div class="product-block thumbnail">
                                     <figure class="image">
                                         <?php echo $product->get_image('image-widgets'); ?>
@@ -92,7 +95,7 @@
                                     <div class="caption">
                                         <div class="deals-information">
                                             <h3 class="name">
-                                                <a href="<?php echo esc_url( get_permalink( $product->id ) ); ?>"><?php echo esc_attr( $product->get_title() ); ?></a>
+                                                <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>"><?php echo esc_html( $product->get_name() ); ?></a>
                                             </h3>
                                             <div class="rating clearfix ">
                                                 <?php if ( $rating_html = $product->get_rating_html() ) { ?>
@@ -128,12 +131,15 @@
                  <div class="widget-content widget_products" id="<?php echo $_id; ?>">
                     <div class="products-inner">
                         <?php foreach($deals as $key=>$id ){
-                            $product = get_product( $id );
-                            $time_sale = get_post_meta( $product->id, '_sale_price_dates_to', true );
+                            $product = wc_get_product( $id );
+                            if ( ! $product ) {
+                                continue;
+                            }
+                            $time_sale = get_post_meta( $product->get_id(), '_sale_price_dates_to', true );
                         ?>
                         <?php if( $_count%$columns_count == 1 || $columns_count == 1 ) echo '<div class="item'.(($_count==1)?" active":"").'"><div class="row">'; ?>
                        
-                                <div class="item-product <?php echo $class_column; if($_count%$columns_count==0) echo ' last'; ?>">
+                                <div class="item-product <?php echo esc_attr( $class_column ); if($_count%$columns_count==0) echo ' last'; ?>">
                                     <div class="product-block thumbnail">
                                         <figure class="image">
                                             <?php echo $product->get_image('image-widgets'); ?>
@@ -142,7 +148,7 @@
                                         <div class="caption">
                                             <div class="deals-information">
                                                 <h3 class="name">
-                                                    <a href="<?php echo esc_url( get_permalink( $product->id ) ); ?>"><?php echo esc_attr( $product->get_title() ); ?></a>
+                                                    <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>"><?php echo esc_html( $product->get_name() ); ?></a>
                                                 </h3>
                                                 <div class="rating clearfix ">
                                                     <?php if ( $rating_html = $product->get_rating_html() ) { ?>

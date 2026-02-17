@@ -26,7 +26,7 @@ if( !(wpo_theme_options('wc_show_related', false)) ){
 			'posts_per_page'       => $posts_per_page,
 			'orderby'              => $orderby,
 			'post__in'             => $related,
-			'post__not_in'         => array( $product->id ),
+			'post__not_in'         => array( $product->get_id() ),
 			'meta_query' => array(
 				array(
 					'key' => '_stock_status',

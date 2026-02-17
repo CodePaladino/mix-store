@@ -69,7 +69,7 @@ $columns = 12/$woocommerce_loop['columns']
 
                     <?php if(wpo_theme_options('is-quickview',true)){ ?>
                         <div class="quick-view">
-                            <a href="#" class="quickview hidden-xs hidden-sm" data-productslug="<?php echo $product->post->post_name; ?>" data-toggle="modal" data-target="#wpo_modal_quickview"> <span><?php echo __('Quick view',TEXTDOMAIN); ?></span> </a>
+                            <a href="#" class="quickview hidden-xs hidden-sm" data-productslug="<?php echo esc_attr( $product->get_slug() ); ?>" data-toggle="modal" data-target="#wpo_modal_quickview"> <span><?php echo __('Quick view',TEXTDOMAIN); ?></span> </a>
                         </div>
                     <?php } ?>
 
@@ -101,11 +101,11 @@ $columns = 12/$woocommerce_loop['columns']
                             $action_add = 'yith-woocompare-add-product';
                             $url_args = array(
                                 'action' => $action_add,
-                                'id' => $product->id
+                                'id' => $product->get_id()
                             );
                         ?>
                         <div class="yith-compare hidden-xs hidden-sm">
-                            <a href="<?php echo wp_nonce_url( add_query_arg( $url_args ), $action_add ); ?>" class="compare" data-product_id="<?php echo $product->id; ?>"> <i class="fa fa-files-o"></i> <span><?php echo __('add to compare',TEXTDOMAIN); ?></span> </a>
+                            <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( $url_args ), $action_add ) ); ?>" class="compare" data-product_id="<?php echo esc_attr( $product->get_id() ); ?>"> <i class="fa fa-files-o"></i> <span><?php echo __('add to compare',TEXTDOMAIN); ?></span> </a>
                         </div>
                         <?php } ?>
         	        </div>

@@ -25,7 +25,7 @@ extract( shortcode_atts( array(
 global $wp_query, $post, $woocommerce;
 $children_cat = array();
 $_total = 0;
-$parent_cat = get_terms( 'product_cat', array( 'fields' => 'ids', 'parent' => 0, 'hierarchical' => false, 'hide_empty' => false ) );
+$parent_cat = get_terms( array( 'taxonomy' => 'product_cat', 'fields' => 'ids', 'parent' => 0, 'hierarchical' => false, 'hide_empty' => false ) );
 $i =0;
 ?>
 

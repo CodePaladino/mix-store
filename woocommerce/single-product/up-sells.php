@@ -24,7 +24,7 @@ if( !(wpo_theme_options('wc_show_upsells', false)) ){
 		'posts_per_page'      => $posts_per_page,
 		'orderby'             => $orderby,
 		'post__in'            => $upsells,
-		'post__not_in'        => array( $product->id ),
+		'post__not_in'        => array( $product->get_id() ),
 		'meta_query'          => $meta_query
 	);
 	$_count =1;

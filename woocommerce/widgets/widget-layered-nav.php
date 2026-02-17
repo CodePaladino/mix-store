@@ -40,7 +40,10 @@ class WPO_Widget_Layered_Nav extends WC_Widget_Layered_Nav {
 		if ( ! taxonomy_exists( $taxonomy ) )
 			return;
 
-	    $get_terms_args = array( 'hide_empty' => '1' );
+	    $get_terms_args = array( 
+	    	'taxonomy' => $taxonomy,
+	    	'hide_empty' => true 
+	    );
 
 		$orderby = wc_attribute_orderby( $taxonomy );
 
@@ -59,7 +62,7 @@ class WPO_Widget_Layered_Nav extends WC_Widget_Layered_Nav {
 			break;
 		}
 
-		$terms = get_terms( $taxonomy, $get_terms_args );
+		$terms = get_terms( $get_terms_args );
 
 		if ( count( $terms ) > 0 ) {
 
